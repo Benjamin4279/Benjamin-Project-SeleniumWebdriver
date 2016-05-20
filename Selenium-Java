@@ -1,0 +1,163 @@
+package com.Logger;
+
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Category;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+
+public class AssertionTest {
+	
+	static WebDriver driver, driver2;
+	
+	public static Category AssertionLogger = Category.getInstance(AssertionTest.class.getName());
+
+	public static void main(String[] args) {
+		
+		BasicConfigurator.configure();
+		
+		//FireFox WebDriver
+		driver = new FirefoxDriver();
+		driver.manage().window().maximize();
+		
+		//FireFox browser
+		driver.get("http://www.github.com");
+		AssertionLogger.info("Launched firefox browser ");
+		
+		
+		//Entered text in the search engine home page
+		driver.findElement(By.xpath("//input[contains(@placeholder, 'Search GitHub')]")).sendKeys("android programming");
+		driver.findElement(By.xpath("//input[contains(@placeholder, 'Search GitHub')]")).submit();
+	
+		
+		//Navigation link menu on GitHub 
+		driver.findElement(By.linkText("Features")).click();
+		AssertionLogger.info("Clicked the Featues link.");
+		AssertionLogger.info("Entered the Features page.");
+		
+		
+		//Clicked navigation buttons on Features page. 
+		driver.findElement(By.xpath("//a[@class = 'btn btn-outline js-segmented-nav-button']")).click();
+		AssertionLogger.info("Clicked on navigation button: Milestone & labels");
+		driver.findElement(By.xpath("//a[@class = 'btn btn-outline js-segmented-nav-button' and @data-selected-tab= 'features-commit-keywords']")).click();
+		AssertionLogger.info("Clicked on navigation button: Commit Keywords");
+		driver.findElement(By.xpath("//a[@class = 'btn btn-outline js-segmented-nav-button' and @data-selected-tab= 'features-issue-listings' ]")).click();
+		AssertionLogger.info("Clicked on navigation button: Issue listings");
+		
+		
+		//Entered text on search engine (Feature page).
+		driver.findElement(By.xpath("//input[@class='js-site-search-focus  chromeless-input']")).sendKeys("Selenium");
+		AssertionLogger.info("Typed Selenium in the input text field on search engine.");
+		driver.findElement(By.xpath("//input[@class='js-site-search-focus  chromeless-input']")).submit();
+		AssertionLogger.info("Submitted result.");
+		
+		
+		
+		//Selected an option in the Menu (Search results page)
+		driver.findElement(By.xpath("//a[contains(@href, 'https://github.com/search?q=Selenium&type=Code&utf8=%E2%9C%93')]")).click();
+		AssertionLogger.info("Selected Code from the menu option.");
+		
+		//Clicked option on navigation menu (Search results page)
+		driver.findElement(By.xpath("//a[@class='header-nav-link' and @data-ga-click= '(Logged out) Header, go to enterprise, text:enterprise']")).click();
+		AssertionLogger.info("Clicked on navigation menu: Enterprise");
+		
+		//Clicked option on navigation menu (GitHub Enterprise page)
+		driver.findElement(By.xpath("//a[@class= 'btn-primary btn-large ga-home-hero-btn' and @href='/trial']")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Try it for free");
+		
+		//45-day Free trial sign up page 
+		driver.findElement(By.xpath("//input[@name='contact_request[user_attributes][name]' and  @id='contact_request_user_attributes_name']")).sendKeys("Benjamin Saint. Elien");
+		driver.findElement(By.xpath("//input[@name='contact_request[user_attributes][organization_attributes][name]' and  @id='contact_request_user_attributes_organization_attributes_name']")).sendKeys("Not Applicable Enterprise");
+		driver.findElement(By.xpath("//input[@name='contact_request[user_attributes][email]' and  @id='contact_request_user_attributes_email']")).sendKeys("benjamin715@verizon.net");
+		driver.findElement(By.xpath("//input[@name='contact_request[user_attributes][phone]' and  @id='contact_request_user_attributes_phone']")).sendKeys("617-888-9999");
+				
+		//Installation type menu-Radio buttons (45-day Free trial sign up page)
+		driver.findElement(By.xpath("//input[@name='contact_request[instance_type]' and @class='js-request-type js-request-type-azure']")).click();
+		driver.findElement(By.xpath("//input[@name='contact_request[instance_type]' and @class='js-request-type js-request-type-aws']")).click();
+		driver.findElement(By.xpath("//input[@name='contact_request[agreed_to_terms]' and @class='js-tou-checkbox tou-checkbox']")).click();
+		driver.findElement(By.xpath("//input[@name='contact_request[instance_type]' and @class='js-request-type js-request-type-on-premises']")).click();
+				
+		//Text area for questions about GitHub Enterprise
+		driver.findElement(By.id("contact_request_comments")).sendKeys("I do not have any questions regarding GitHub Enterprise at this time. Thank you.");
+		
+		
+		//Send request button
+		driver.findElement(By.xpath("//button[contains(@class, 'btn-success js-trial-submit ga-button-trial-form-send')]")).click();
+		AssertionLogger.info("Clicked on: Send Request");
+		
+		driver.close();
+		
+		
+		//Set property for the Internet Explorer Browser
+		System.setProperty("webdriver.ie.driver", 
+				"C:\\Users\\Benjamin\\AppData\\Local\\Temp\\Temp5_IEDriverServer_x64_2.50.0.zip\\IEDriverServer.exe");
+		
+		//Internet Explorer WebDriver
+		driver2 = new InternetExplorerDriver();
+		
+		//InternetExplorer browser
+		driver2.manage().window().maximize();
+		driver2.get("http://www.github.com");
+		AssertionLogger.info("Launched Internet Explorer browser");
+		
+		//Clicked on "Learn more about GitHub Enterprise" button on home page  
+		driver2.findElement(By.xpath("//a[@class='btn btn-marketing' and @href='https://enterprise.github.com']")).click();
+		AssertionLogger.info("Clicked on: Learn more about GitHub Enterprise. ");
+		
+		
+		//Clicked on "Learn about GitHub Flow" (GitHub Enterprise page) 
+		driver2.findElement(By.xpath("//a[contains(@href,'https://guides.github.com/introduction/flow/')]")).click();
+		AssertionLogger.info("Clicked on: Learn about GitHub Flow");
+		
+		//Calculator for plan estimation and pricing breakdown
+		driver2.findElement(By.xpath("//input[@class='estimator' and @id='seats']")).clear();
+		AssertionLogger.info("Entered numbers to calculate pricing: 322"); 
+		driver2.findElement(By.xpath("//input[@class='estimator' and @id='seats']")).sendKeys("322");
+		
+		//Navigation menu (Lower section) 
+		driver2.findElement(By.xpath("//a[contains(@href,'#integrations')]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Lower section: Integrations");
+		driver2.findElement(By.xpath("//a[contains(@href,'#features')]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Lower section: Features");
+		driver2.findElement(By.xpath("//a[contains(@href,'#compare')]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Lower section: Compare");
+		driver2.findElement(By.xpath("//a[contains(@href,'#pricing')]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Lower section: Pricing");
+		
+		//Navigation menu (Upper section)
+		driver2.findElement(By.xpath("//a[contains(@href,'/resources')]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Resources");
+		driver2.findElement(By.xpath("//a[contains(@href,'/features#pricing' )]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Pricing");
+		driver2.findElement(By.xpath("//a[contains(@href,'/case-studies' )]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Case Studies ");
+		driver2.findElement(By.xpath("//a[contains(@href,'/features' )]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Features");
+		driver2.findElement(By.xpath("//a[contains(@href,'/contact' )]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Contact");
+		driver2.findElement(By.xpath("//a[contains(@href,'/login' )]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Login");
+		driver2.findElement(By.xpath("//a[contains(@href,'/trial' )]")).click();
+		AssertionLogger.info("Clicked on navigation menu-Upper section: Try it for free");
+		
+		//45-day Free trial sign up page 
+		driver2.findElement(By.xpath("//input[@name='contact_request[user_attributes][name]' and  @id='contact_request_user_attributes_name']")).sendKeys("Benjamin Saint. Elien");
+		driver2.findElement(By.xpath("//input[@name='contact_request[user_attributes][organization_attributes][name]' and  @id='contact_request_user_attributes_organization_attributes_name']")).sendKeys("Not Applicable Enterprise");
+		driver2.findElement(By.xpath("//input[@name='contact_request[user_attributes][email]' and  @id='contact_request_user_attributes_email']")).sendKeys("benjamin715@verizon.net");
+		driver2.findElement(By.xpath("//input[@name='contact_request[user_attributes][phone]' and  @id='contact_request_user_attributes_phone']")).sendKeys("617-880-9990");
+		
+		//Installation type menu-Radio buttons (45-day Free trial sign up page)
+		driver2.findElement(By.xpath("//input[@name='contact_request[instance_type]' and @class='js-request-type js-request-type-azure']")).click();
+		driver2.findElement(By.xpath("//input[@name='contact_request[instance_type]' and @class='js-request-type js-request-type-aws']")).click();
+		driver2.findElement(By.xpath("//input[@name='contact_request[agreed_to_terms]' and @class='js-tou-checkbox tou-checkbox']")).click();
+		driver2.findElement(By.xpath("//input[@name='contact_request[instance_type]' and @class='js-request-type js-request-type-on-premises']")).click();
+		
+		//Text area for questions about GitHub Enterprise
+		driver2.findElement(By.id("contact_request_comments")).sendKeys("I do not have any questions regarding GitHub Enterprise at this time.");
+		
+		driver2.close();
+	}
+
+}
